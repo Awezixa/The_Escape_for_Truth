@@ -90,8 +90,9 @@ public class PursuePlayer : MonoBehaviour
 
     void OnDrawGizmosSelected()
     {
-        if (!target) return;
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, sightRange);
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(target.position, 0.2f);
+        Gizmos.DrawWireSphere(transform.position, outOfSight);
     }
 }
