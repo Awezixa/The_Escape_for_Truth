@@ -6,6 +6,7 @@ public class PlayerControls : MonoBehaviour
     public int Speed;
     public float inputX;
     public float inputY;
+    public float input;
     private Rigidbody2D rb;
 
     private Vector2 screenSize;
