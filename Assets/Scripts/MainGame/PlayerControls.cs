@@ -10,16 +10,21 @@ public class PlayerControls : MonoBehaviour
     public float input;
     private Rigidbody2D rb;
     public float sprintSpeed;
+    public Vector2 facing = Vector2.right;
+
+    //for clamping into world bounds
+    [Header("World Bounds")]
+    public Vector2 worldMin = new Vector2(-20f, -20f);//bottom left corner of play area
+    public Vector2 worldMax = new Vector2(20f, 20f);//top right corner of the play area
+
 
     private Vector2 screenSize;
-    private Camera Cam;
     public float padding = 0.5f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        Cam = Camera.main;
     }
 
     // Update is called once per frame
@@ -28,23 +33,24 @@ public class PlayerControls : MonoBehaviour
         inputX = Input.GetAxisRaw("Horizontal");
         inputY = Input.GetAxisRaw("Vertical");
 
+        if (inputX != 0 || inputY != 0)
+        {
+            facing = new Vector2(inputX, inputY).normalized;
+        }
 
         Vector3 moveDir = Vector3.Normalize(new Vector2(inputX, inputY));
         rb.linearVelocity = moveDir * sprint();
         //Debug.Log("Speed = " + Speed);
-        clampToCamera();
+        clampToWorld();
     }
 
-    void clampToCamera()
+    void clampToWorld()
     {
-        float halfHeight = Cam.orthographicSize;
-        float halfWidth = halfHeight * Cam.aspect;
-        Vector2 camPos = Cam.transform.position;
 
-        float minX = camPos.x - halfWidth + padding;
-        float maxX = camPos.x + halfWidth - padding;
-        float minY = camPos.y - halfHeight + padding;
-        float maxY = camPos.y + halfHeight - padding;
+        float minX = worldMin.x + padding;
+        float maxX = worldMax.x - padding;
+        float minY = worldMin.y + padding;
+        float maxY = worldMax.y - padding;
 
         //clamp the players position within cameras zone
         Vector2 pos = rb.position;
@@ -62,6 +68,15 @@ public class PlayerControls : MonoBehaviour
             
         }
         return Speed;
+    }
+
+    //draw world boundries gizmo
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Vector2 center = (worldMin + worldMax) / 2f;
+        Vector2 size = worldMax - worldMin;
+        Gizmos.DrawWireCube(center, size);
     }
 
 }
