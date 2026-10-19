@@ -754,6 +754,7 @@ MonoBehaviour:
   inputX: 0
   inputY: 0
   input: 0
+  sprintSpeed: 1.5
   padding: 0.5
 --- !u!212 &1197424464
 SpriteRenderer:

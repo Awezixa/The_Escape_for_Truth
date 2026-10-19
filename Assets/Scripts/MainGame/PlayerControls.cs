@@ -1,13 +1,15 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerControls : MonoBehaviour
 {
 
-    public int Speed;
+    public float Speed;
     public float inputX;
     public float inputY;
     public float input;
     private Rigidbody2D rb;
+    public float sprintSpeed;
 
     private Vector2 screenSize;
     private Camera Cam;
@@ -28,8 +30,8 @@ public class PlayerControls : MonoBehaviour
 
 
         Vector3 moveDir = Vector3.Normalize(new Vector2(inputX, inputY));
-        rb.linearVelocity = moveDir * Speed;
-
+        rb.linearVelocity = moveDir * sprint();
+        //Debug.Log("Speed = " + Speed);
         clampToCamera();
     }
 
@@ -51,8 +53,15 @@ public class PlayerControls : MonoBehaviour
         rb.position = pos;
     }
 
-    void collectDocument()
-    {
 
+    float sprint()
+    {
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            return Speed * sprintSpeed;
+            
+        }
+        return Speed;
     }
+
 }
