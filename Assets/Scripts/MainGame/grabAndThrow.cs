@@ -1,23 +1,23 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class grabAndThrow : MonoBehaviour
 {
 
-    [SerializeField]
-    private Transform grabPoint;
+    [SerializeField] private float rayDistance = 1.5f;
+    [SerializeField] private float holdDistance = 0.8f;   // where throwables are held
 
-
-    [SerializeField]
-    private Transform rayPoint;
-    [SerializeField]
-    private float rayDistance;
+    const string ThrowableTag = "Throwable";
+    const string MovabaleTag = "Moveable";
 
     //for grabbing the object
     private GameObject grabbedObject;// default set to null
+    private Rigidbody2D grabbedRb;
+    private bool isThrowable;
     private int layerIndex;
     private int layerMask;
     private PlayerControls controls;
-
+ 
 
     //physics for throwing the object
     //vairables for calculations
@@ -53,45 +53,45 @@ public class grabAndThrow : MonoBehaviour
     {
 
         Vector2 dir = controls.facing;
-        RaycastHit2D hitInfo = Physics2D.Raycast(rayPoint.position, transform.right, rayDistance, layerMask);// creates a ray to determine length of ray
-                                                                                                             // info about what ray hits its stored in hitInfo variable
+
+        if (grabbedObject != null && isThrowable)
+        {
+            grabbedObject.transform.position = (Vector2)transform.position + dir * holdDistance;
+        }
+
+        Vector2 origin = (Vector2)transform.position + dir * 0.6f;
+
+
+        RaycastHit2D hitInfo = Physics2D.CircleCast(origin, 0.4f, dir, rayDistance, layerMask);// creates a ray to determine length of ray
+        Debug.DrawRay(origin, dir * rayDistance, hitInfo.collider != null ? Color.green : Color.red); // info about what ray hits its stored in hitInfo variable
+
+
 
         if (hitInfo.collider != null && hitInfo.collider.gameObject.layer == layerIndex)//checks that ray hitting is not nothing and that layer is correct, then we check inputs
         {
             //debug to see ray if hits or not. Green = hit, red = no hit
-            Debug.DrawRay(rayPoint.position, transform.right * rayDistance, hitInfo.collider != null ? Color.green : Color.red);
+            Debug.DrawRay(origin, dir * rayDistance, hitInfo.collider != null ? Color.green : Color.red);
 
 
             //grab object
-            if (Input.GetKeyDown(KeyCode.E) && grabbedObject == null)
+            if (Input.GetKeyDown(KeyCode.E))
             {
-                grabbedObject = hitInfo.collider.gameObject; // stores grabbed object into variable
-                grabbedObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic; // change grabbed object into kinematic
-                grabbedObject.transform.position = grabPoint.position; // moving into position 
-                grabbedObject.transform.SetParent(transform); //setting the player to be the parent object
+                if(grabbedObject == null && hitInfo.collider != null)
+                {
+                    tryGrab(hitInfo.collider.gameObject, dir);
+                }
+                else if (grabbedObject != null && !isThrowable)
+                {
+                    releaseObj();// leaves moveable object
+                }
 
-                grabObject();
             }
-            else if (Input.GetKeyDown(KeyCode.T) && grabbedObject != null)
+            if (Input.GetKeyDown(KeyCode.T) && grabbedObject != null && isThrowable)
             {
                 //throw object
-                thrownRb = grabbedObject.GetComponent<Rigidbody2D>();
-                grabbedObject.transform.SetParent(null);// have to set parent to null since leaving the player parent
-                thrownRb.bodyType = RigidbodyType2D.Dynamic;
-
-                //displacement
-                Vector2 displacement = dir * throwDistance + playerRb.linearVelocity * momentum;
-
-                throwStart = thrownRb.position;
-                displacePos = throwStart + displacement;
-                throwTimer = throwDuration;
-                thrownRb.linearVelocity = displacement.normalized * throwSpeed;
-
-
-                //place object down
-                //grabbedObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;// change grabbed object back to dynamic
-                //grabbedObject.transform.SetParent(null);//set parent to null
-                //grabbedObject = null;//clear grabbed object variable
+                throwObj(dir);
+                
+                grabbedObject = null;//clear grabbed object variable
 
 
             }
@@ -99,14 +99,6 @@ public class grabAndThrow : MonoBehaviour
 
         }
 
-        //if (playerNear && Input.GetKeyDown(KeyCode.E))
-        //{
-        //    grabObject();
-        //}
-        //if (Input.GetKeyDown(KeyCode.T) && grabbed)
-        //{
-        //    throwObject();
-        //}
     }
 
 
@@ -127,22 +119,65 @@ public class grabAndThrow : MonoBehaviour
         }
     }
 
-    void grabObject()
-    {
 
-        Debug.Log("Document Collected!");
+    void tryGrab(GameObject obj, Vector2 dir)
+    {
+        //checks the object type to see what to do
+        bool throwable = obj.CompareTag("Throwable");
+        bool movable = obj.CompareTag("Movable");
+        if (!throwable && !movable) return; //not working then continue
+
+        thrownRb = null; //clear any objects being thrown
+        
+        grabbedObject = obj;
+        grabbedRb = obj.GetComponent<Rigidbody2D>();
+        isThrowable = throwable;
+
+        grabbedRb.linearVelocity = Vector2.zero;
+        grabbedRb.bodyType = RigidbodyType2D.Kinematic;//changing rb to kinematic so can be thrown
+
+        if (isThrowable)
+        {
+            obj.transform.position = (Vector2)transform.position + dir;
+        }
+
+        obj.transform.SetParent(transform);
+
 
     }
 
-    //float throwObject()
-    //{
-    //    return displacePos = transform.player + ;
-    //}
+    void releaseObj()
+    {
+        //place object down
+        grabbedRb.transform.SetParent(null);//set parent to null
+        grabbedRb.bodyType = RigidbodyType2D.Dynamic;// change grabbed object back to dynamic
+        grabbedRb.linearVelocity = Vector2.zero;
+        ClearGrab();
+        
+    }
+    void ClearGrab()
+    {
+        grabbedObject = null;
+        grabbedRb = null;
+    }
 
+    void throwObj(Vector2 dir)
+    {
+        thrownRb = grabbedRb;
+        grabbedObject.transform.SetParent(null);// have to set parent to null since leaving the player parent
+        thrownRb.bodyType = RigidbodyType2D.Dynamic;
 
+        //displacement
+        Vector2 displacement = dir * throwDistance + playerRb.linearVelocity * momentum;
 
+        throwStart = thrownRb.position;
+        displacePos = throwStart + displacement;
+        throwTimer = throwDuration;
+        thrownRb.linearVelocity = displacement.normalized * throwSpeed;
 
+        ClearGrab();
 
+    }
 
 
 
