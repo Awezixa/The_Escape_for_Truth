@@ -17,7 +17,7 @@ public class grabAndThrow : MonoBehaviour
     private int layerIndex;
     private int layerMask;
     private PlayerControls controls;
- 
+    private FixedJoint2D grabJoint;
 
     //physics for throwing the object
     //vairables for calculations
@@ -132,16 +132,21 @@ public class grabAndThrow : MonoBehaviour
         grabbedObject = obj;
         grabbedRb = obj.GetComponent<Rigidbody2D>();
         isThrowable = throwable;
-
         grabbedRb.linearVelocity = Vector2.zero;
-        grabbedRb.bodyType = RigidbodyType2D.Kinematic;//changing rb to kinematic so can be thrown
 
         if (isThrowable)
         {
+            grabbedRb.bodyType = RigidbodyType2D.Kinematic;
             obj.transform.position = (Vector2)transform.position + dir;
+            obj.transform.SetParent(transform);
         }
-
-        obj.transform.SetParent(transform);
+        else
+        {
+            // pushed/pulled: stays dynamic and is attached with a joint
+            grabJoint = obj.AddComponent<FixedJoint2D>();
+            grabJoint.connectedBody = playerRb;
+            grabJoint.enableCollision = true;   // lets the trolley and player collide
+        }
 
 
     }
@@ -149,11 +154,14 @@ public class grabAndThrow : MonoBehaviour
     void releaseObj()
     {
         //place object down
-        grabbedRb.transform.SetParent(null);//set parent to null
-        grabbedRb.bodyType = RigidbodyType2D.Dynamic;// change grabbed object back to dynamic
+        if (grabJoint != null)
+        {
+            Destroy(grabJoint);
+            grabJoint = null;
+        }
         grabbedRb.linearVelocity = Vector2.zero;
         ClearGrab();
-        
+
     }
     void ClearGrab()
     {
