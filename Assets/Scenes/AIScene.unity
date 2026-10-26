@@ -131,6 +131,7 @@ GameObject:
   - component: {fileID: 67137187}
   - component: {fileID: 67137190}
   - component: {fileID: 67137189}
+  - component: {fileID: 67137191}
   m_Layer: 0
   m_Name: NPC
   m_TagString: Untagged
@@ -255,6 +256,21 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &67137191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 67137186}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbd3c256df9f95b4da3c12d1f3ca570b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Seek
+  _playerTransform: {fileID: 0}
+  moveSpeed: 3
+  detectionRadius: 5
 --- !u!1 &290197101
 GameObject:
   m_ObjectHideFlags: 0
@@ -544,6 +560,12 @@ MonoBehaviour:
   Speed: 5
   inputX: 0
   inputY: 0
+  input: 0
+  sprintSpeed: 0
+  facing: {x: 1, y: 0}
+  worldMin: {x: -20, y: -20}
+  worldMax: {x: 20, y: 20}
+  padding: 0.5
 --- !u!212 &1336040854
 SpriteRenderer:
   serializedVersion: 2

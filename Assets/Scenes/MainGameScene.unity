@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 69837611}
   - component: {fileID: 69837612}
   - component: {fileID: 69837613}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Document
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -270,37 +270,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66295427f80234b44a6f1cecd9329c0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DocumentCollection
---- !u!1 &266157946
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 266157947}
-  m_Layer: 0
-  m_Name: GameHandler
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &266157947
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 266157946}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -642,8 +611,8 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
+  m_Mass: 5
+  m_LinearDamping: 2
   m_AngularDamping: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -853,7 +822,7 @@ GameObject:
   - component: {fileID: 1197424466}
   - component: {fileID: 1197424467}
   - component: {fileID: 1197424468}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -984,7 +953,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!58 &1197424467
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1035,10 +1004,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::grabAndThrow
   rayDistance: 0.2
   holdDistance: 0.8
+  grabMask:
+    serializedVersion: 2
+    m_Bits: 64
   throwDistance: 4
   throwSpeed: 7
   momentum: 0.5
-  throwDuration: 1
 --- !u!1 &1342002320
 GameObject:
   m_ObjectHideFlags: 0
@@ -1048,7 +1019,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1342002321}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GrabPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1080,7 +1051,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1371674457}
   - component: {fileID: 1371674458}
-  m_Layer: 7
+  m_Layer: 3
   m_Name: MinimapIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1201,7 +1172,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1532522397}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RayPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1256,7 +1227,7 @@ MonoBehaviour:
   sweepAngle: 45
   sweepSpeed: 30
   sweepDelay: 2
-  viewDistance: 6
+  viewDistance: 4
   fieldOfView: 60
   obstacleMask:
     serializedVersion: 2
@@ -1331,8 +1302,8 @@ Transform:
   m_GameObject: {fileID: 1538334019}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.98, y: -4.01, z: 0}
-  m_LocalScale: {x: 1.4669, y: 2.1409, z: 1}
+  m_LocalPosition: {x: -8.2806, y: -4.3497, z: 0}
+  m_LocalScale: {x: 0.8657644, y: 0.9643957, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1611,7 +1582,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -1640,10 +1611,10 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDamping: 0
+  m_LinearDamping: 2
   m_AngularDamping: 0.05
   m_GravityScale: 0
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: f7426c17870be3e47b5e4b47f603af07, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1664,7 +1635,6 @@ SceneRoots:
   - {fileID: 912037716}
   - {fileID: 69837609}
   - {fileID: 1997613783}
-  - {fileID: 266157947}
   - {fileID: 680568916}
   - {fileID: 1403080805}
   - {fileID: 1538334022}

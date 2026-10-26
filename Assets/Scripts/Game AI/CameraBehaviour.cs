@@ -31,6 +31,7 @@ public class CameraBehaviour : MonoBehaviour
         GameObject p = GameObject.FindGameObjectWithTag("Player");
         if (p) player = p.transform;
         else Debug.LogWarning("CameraBehaviour: no object tagged 'Player' found.");
+        obstacleMask = LayerMask.GetMask("Objects", "Throwable");
     }
 
     // Update is called once per frame

@@ -6,17 +6,18 @@ TagManager:
   tags:
   - Throwable
   - Movable
+  - Walls
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Collectables
+  - Player
   - Water
   - UI
-  - Objects
+  - Throwable
   - Minimap
-  - 
-  - 
+  - Walls
+  - Collectables
   - 
   - 
   - 
