@@ -77,6 +77,9 @@ public class CameraBehaviour : MonoBehaviour
         {
             Vector2 toPlayer = (Vector2)player.position - (Vector2)transform.position;
             float dist = toPlayer.magnitude;
+            //GameManager.Instance.playerSus += 2;
+            //Debug.Log("PLayer sus: ");
+
 
             // inside range and inside the cone?
             if (dist <= viewDistance && Vector2.Angle(Downward, toPlayer) <= fieldOfView / 2f)
