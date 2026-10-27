@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 69837611}
   - component: {fileID: 69837612}
   - component: {fileID: 69837613}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: Document
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -381,7 +381,7 @@ Camera:
   m_Depth: 1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 127
+    m_Bits: 1919
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -518,7 +518,7 @@ GameObject:
   - component: {fileID: 680568915}
   - component: {fileID: 680568918}
   - component: {fileID: 680568917}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: Trolley
   m_TagString: Movable
   m_Icon: {fileID: 0}
@@ -572,7 +572,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_MaskInteraction: 0
   m_Sprite: {fileID: -6756224647795966196, guid: eee79269b8211214a88a2ae40a3b202f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -594,7 +594,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.32, y: 0.04, z: 0}
-  m_LocalScale: {x: 0.3328912, y: 0.32887718, z: 1}
+  m_LocalScale: {x: 0.3328912, y: 0.32887718, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1006,7 +1006,7 @@ MonoBehaviour:
   holdDistance: 0.8
   grabMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 1088
   throwDistance: 4
   throwSpeed: 7
   momentum: 0.5
