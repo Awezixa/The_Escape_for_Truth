@@ -30,8 +30,14 @@ public class DocumentCollection : MonoBehaviour
 
     void collectDocument()
     {
-        //GameManager.Instance.docsCollected++;
+        OnCollected(); // function that does differnt things based on type of document collected
         Debug.Log("Document Collected!");
         Destroy(gameObject);
     }
+
+    protected virtual void OnCollected()
+    {
+
+    }
+
 }
