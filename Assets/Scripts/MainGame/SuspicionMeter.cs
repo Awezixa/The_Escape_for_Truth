@@ -12,6 +12,8 @@ public class SuspicionMeter : MonoBehaviour
     [Range(0f, 1f)] public float suspicion;
     public bool caught;
 
+    
+    //cam
     private CameraBehaviour[] cameras;
     private float drainTimer;
 
