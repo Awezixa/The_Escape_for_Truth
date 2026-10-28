@@ -30,6 +30,7 @@ public class DocumentCollection : MonoBehaviour
 
     void collectDocument()
     {
+        GameManager.Instance.docsCollected++;
         Debug.Log("Document Collected!");
         Destroy(gameObject);
     }

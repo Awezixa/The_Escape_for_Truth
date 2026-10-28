@@ -79,4 +79,10 @@ public class PlayerControls : MonoBehaviour
         Gizmos.DrawWireCube(center, size);
     }
 
+
+    void work()
+    {
+
+    }
+
 }
