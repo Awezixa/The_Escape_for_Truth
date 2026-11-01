@@ -27,8 +27,17 @@ public class grabAndThrow : MonoBehaviour
         controls = GetComponent<PlayerControls>();
     }
 
-    void Update()
+
+    
+
+void Update()
     {
+        //if (GameManager.Instance.State != GameState.Playing)
+        //{
+        //    playerRb.linearVelocity = Vector2.zero;   // in grabAndThrow, just use: return;
+        //    return;
+        //}
+
         Vector2 dir = controls.facing;
 
         // held throwable follows the facing direction
@@ -36,6 +45,7 @@ public class grabAndThrow : MonoBehaviour
         {
             grabbedObject.transform.position = (Vector2)transform.position + dir * holdDistance;
         }
+
 
         Vector2 origin = (Vector2)transform.position + dir * 0.6f;
         RaycastHit2D hitInfo = Physics2D.CircleCast(origin, 0.4f, dir, rayDistance, grabMask);

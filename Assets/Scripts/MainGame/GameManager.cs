@@ -1,6 +1,6 @@
 using UnityEngine;
 
-
+public enum GameState { Playing, Working, GameOver, Won }
 //script going to be dealing with rules and controlling game state
 public class GameManager : MonoBehaviour
 {
@@ -14,6 +14,11 @@ public class GameManager : MonoBehaviour
     //public int playerSus = 0;
     //public int maxPlayerSus = 15;
 
+    //public GameState State { get; private set; } = GameState.Playing;
+    //public int casesCorrect, casesWrong;
+    //public int maxMistakes = 3;
+
+    //public void SetState(GameState s) => State = s;
 
 
 
@@ -28,4 +33,11 @@ public class GameManager : MonoBehaviour
         gameOver = true;
         Debug.Log("You win!");
     }
+    //public void CaseResolved(bool correct)
+    //{
+    //    if (correct) { casesCorrect++; return; }
+    //    casesWrong++;
+    //    // later: playerSus += 5;
+    //    if (casesWrong >= maxMistakes) { State = GameState.GameOver; Debug.Log("Fired!"); }
+    //}
 }

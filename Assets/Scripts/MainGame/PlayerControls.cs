@@ -80,9 +80,4 @@ public class PlayerControls : MonoBehaviour
     }
 
 
-    void work()
-    {
-
-    }
-
 }
