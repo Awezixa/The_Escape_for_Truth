@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class PlayerControls : MonoBehaviour
@@ -20,6 +21,7 @@ public class PlayerControls : MonoBehaviour
 
     private Vector2 screenSize;
     public float padding = 0.5f;
+    Vector2 moveDir;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -38,25 +40,25 @@ public class PlayerControls : MonoBehaviour
             facing = new Vector2(inputX, inputY).normalized;
         }
 
-        Vector3 moveDir = Vector3.Normalize(new Vector2(inputX, inputY));
+        moveDir = new Vector2(inputX, inputY);
+    }
+
+    private void FixedUpdate()
+    {
+
         rb.linearVelocity = moveDir * sprint();
-        //Debug.Log("Speed = " + Speed);
         clampToWorld();
     }
 
+
     void clampToWorld()
     {
-
-        float minX = worldMin.x + padding;
-        float maxX = worldMax.x - padding;
-        float minY = worldMin.y + padding;
-        float maxY = worldMax.y - padding;
-
-        //clamp the players position within cameras zone
         Vector2 pos = rb.position;
-        pos.x = Mathf.Clamp(pos.x, minX, maxX);
-        pos.y = Mathf.Clamp(pos.y, minY, maxY);
-        rb.position = pos;
+        Vector2 clamped = new Vector2(
+            Mathf.Clamp(pos.x, worldMin.x + padding, worldMax.x - padding),
+            Mathf.Clamp(pos.y, worldMin.y + padding, worldMax.y - padding));
+
+        if (clamped != pos) rb.position = clamped;   // only move the player when actually out of bounds
     }
 
 
