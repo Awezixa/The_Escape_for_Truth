@@ -18,8 +18,22 @@ public class CameraBehaviour : MonoBehaviour
     private float pauseTimer;
     private Transform player;
 
+
+    //camera gizmos visible to player
+    public Material coneMaterial;      // optional, see the note below
+    public int coneSegments = 30;      // more = smoother edge
+    public int coneSortingOrder = 0;   // keep this below the player's Order in Layer
+    public Color normalColour = new Color(1f, 1f, 0f, 0.25f);
+    public Color alertColour = new Color(1f, 0f, 0f, 0.35f);
+
+    private Mesh coneMesh;
+    private MeshRenderer coneRenderer;
+    private GameObject coneObject;
+
+
+
     //directoin camera looks
-    Vector2 Downward => Quaternion.Euler(0, 0, angleOffset) * transform.right;
+    Vector2 forward => Quaternion.Euler(0, 0, angleOffset) * transform.right;
     public float angleOffset = 0f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -40,6 +54,11 @@ public class CameraBehaviour : MonoBehaviour
         Sweep();
         DetectPlayer();
     }
+    // LateUpdate runs after Update, so the cone follows this frame's sweep rotation
+    //void LateUpdate()
+    //{
+    //    DrawCone();
+    //}
 
 
     void Sweep()
@@ -82,7 +101,7 @@ public class CameraBehaviour : MonoBehaviour
 
 
             // inside range and inside the cone?
-            if (dist <= viewDistance && Vector2.Angle(Downward, toPlayer) <= fieldOfView / 2f)
+            if (dist <= viewDistance && Vector2.Angle(forward, toPlayer) <= fieldOfView / 2f)
             {
                 // nothing solid between the camera and the player?
                 seen = !Physics2D.Raycast(transform.position, toPlayer.normalized, dist, obstacleMask);
@@ -95,6 +114,23 @@ public class CameraBehaviour : MonoBehaviour
             Debug.Log(seen ? "Player spotted!" : "Player lost");
         }
     }
+
+    //void CreateCone()
+    //{
+    //    // a separate, unparented object, so this camera's scale and rotation can't distort the mesh
+    //    coneObject = new GameObject(name + "_VisionCone");
+    //    coneMesh = new Mesh();
+    //    coneObject.AddComponent<MeshFilter>().mesh = coneMesh;
+    //    coneRenderer = coneObject.AddComponent<MeshRenderer>();
+
+    //    coneRenderer.sharedMaterial = coneMaterial != null
+    //        ? coneMaterial
+    //        : new Material(Shader.Find("Sprites/Default"));   // unlit, supports transparency and vertex colour
+
+    //    coneRenderer.sortingOrder = coneSortingOrder;
+    //}
+
+
 
     // Draws the cone in the Scene view (red when the player is spotted)
     void OnDrawGizmos()
@@ -117,4 +153,64 @@ public class CameraBehaviour : MonoBehaviour
         }
         Gizmos.DrawLine(transform.position, prev);
     }
+
+    //void DrawCone()
+    //{
+    //    int n = Mathf.Max(2, coneSegments);
+    //    Vector3[] verts = new Vector3[n + 2];
+    //    Color[] colours = new Color[n + 2];
+    //    int[] tris = new int[n * 3];
+
+    //    Vector2 origin = transform.position;
+    //    float facing = transform.eulerAngles.z + angleOffset;   // same direction the detection uses
+    //    float start = facing - fieldOfView / 2f;
+    //    Color col = playerDetected ? alertColour : normalColour;
+
+    //    verts[0] = origin;
+    //    colours[0] = col;
+
+    //    for (int i = 0; i <= n; i++)
+    //    {
+    //        float a = (start + fieldOfView * i / n) * Mathf.Deg2Rad;
+    //        Vector2 dir = new Vector2(Mathf.Cos(a), Mathf.Sin(a));
+
+    //        // shorten this edge if a wall is in the way
+    //        float dist = viewDistance;
+    //        RaycastHit2D hit = Physics2D.Raycast(origin, dir, viewDistance, obstacleMask);
+    //        if (hit.collider != null) dist = hit.distance;
+
+    //        verts[i + 1] = origin + dir * dist;
+    //        colours[i + 1] = col;
+    //    }
+
+    //    for (int i = 0; i < n; i++)
+    //    {
+    //        tris[i * 3] = 0;
+    //        tris[i * 3 + 1] = i + 2;   // clockwise winding so the front face points at the 2D camera
+    //        tris[i * 3 + 2] = i + 1;
+    //    }
+
+    //    coneMesh.Clear();
+    //    coneMesh.vertices = verts;
+    //    coneMesh.colors = colours;
+    //    coneMesh.triangles = tris;
+    //    coneMesh.RecalculateBounds();
+    //}
+
+    //void OnDestroy()
+    //{
+    //    if (coneObject) Destroy(coneObject);
+    //}
+
+
+
+
+
+
+
+
+
+
+
+
 }

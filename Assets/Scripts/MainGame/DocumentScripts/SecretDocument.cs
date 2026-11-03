@@ -1,16 +1,7 @@
+// SecretDocument.cs
 using UnityEngine;
 
 public class SecretDocument : DocumentCollection
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    void Reset() { suspicionWhenSeen = 0.40f; } // when add more doc types, just copy and change amount want to add depending on type
 }

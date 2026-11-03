@@ -29,11 +29,7 @@ public class SuspicionMeter : MonoBehaviour
     {
         if (caught) return;
 
-        bool seen = false;
-        foreach (CameraBehaviour cam in cameras)
-        {
-            if (cam && cam.playerDetected) { seen = true; break; }
-        }
+        bool seen = IsPlayerSeen();
 
         if (seen)
         {
@@ -72,4 +68,25 @@ public class SuspicionMeter : MonoBehaviour
             segments[i].color = c;
         }
     }
+
+    // true if any camera currently has the player in its vision cone
+    public bool IsPlayerSeen()
+    {
+        foreach (CameraBehaviour cam in cameras)
+        {
+            if (cam && cam.playerDetected) return true;
+        }
+        return false;
+    }
+
+    // raises suspicion instantly by a fraction of the bar (0.15 = 15%)
+    public void AddSuspicion(float amount)
+    {
+        if (caught) return;
+
+        suspicion = Mathf.Clamp01(suspicion + amount);
+        drainTimer = drainDelay;   // pause the draining so the jump doesn't fade straight away
+        UpdateSegments();
+    }
+
 }
