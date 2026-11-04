@@ -24,15 +24,9 @@ public class WaypointFollow : MonoBehaviour
         //loop logic for ai to follow nodes in set order till reach end, can make infite if change order
         if (transform.position != path.Get(index)) return;
 
-        if (loop)
-        {
-            if (index + 1 < path.Count) index++;
-        }
-        else
-        {
-            index = 0;
-            done = true;
-        }
+        if (index + 1 < path.Count) index++;
+        else if (loop) index = 0;
+        else done = true;
 
     }
 

@@ -1,6 +1,6 @@
 using UnityEngine;
-
-public enum GameState { Playing, Working, GameOver, Won }
+using UnityEngine.SceneManagement;
+public enum GameState { Playing, Working, GameOver, Won, Pause }
 //script going to be dealing with rules and controlling game state
 public class GameManager : MonoBehaviour
 {
@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     bool gameOver;
     public int docsCollected;
     public int docsNeeded = 1;
+    public bool IsGameOver => gameOver;
 
     //public int playerSus = 0;
     //public int maxPlayerSus = 15;
@@ -26,7 +27,25 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         Instance = this; // lets any script access the GameManager instance
+        Time.timeScale = 1f;   // timeScale carries over between scene loads, so reset it
     }
+
+
+    public void PlayerCaught()
+    {
+        if (gameOver) return;
+        gameOver = true;
+        Debug.Log("Caught by a guard! Game over. Press R to restart.");
+        Time.timeScale = 0f;   // freezes physics, the guard and the suspicion meter
+    }
+
+    void Update()
+    {
+        if (gameOver && Input.GetKeyDown(KeyCode.R))
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+
 
     void Win()
     {

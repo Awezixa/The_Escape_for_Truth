@@ -1,6 +1,6 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 /// Pursue — chase a moving player by aiming ahead of them.
 ///
@@ -15,15 +15,16 @@ public class PursuePlayer : MonoBehaviour
 {
 
     public float maxLookAheadTime = 2f;
-
-
+    public float sightRange = 5f;
+    public float outOfSight = 10f;
     public float moveSpeed = 5f;
+    
     Rigidbody2D rb;// guard rb
     Rigidbody2D targetRb; //player rb
     Transform target;
-    bool inChase;
-    public float sightRange = 5f;
-    public float outOfSight= 10f;
+
+    public bool inChase;
+    
 
 
 
@@ -31,9 +32,10 @@ public class PursuePlayer : MonoBehaviour
     void Start()
     {
         //set the guard to target the player
-        target = GameObject.Find("Player").transform;
-        if (target)
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player)
         {
+            target = player.transform;
             targetRb = target.GetComponent<Rigidbody2D>();
         }
         rb = GetComponent<Rigidbody2D>();
@@ -52,17 +54,11 @@ public class PursuePlayer : MonoBehaviour
 
         Vector2 myPos = rb.position;
         Vector2 targetPos = target.position;
-        float Distance = Vector2.Distance(myPos, targetPos);
+        float distance = Vector2.Distance(myPos, targetPos);
 
-        //range for the chase
-        if(!inChase && Distance <= sightRange)
-        {
-            inChase = true;
-        }
-        else if (inChase && Distance > outOfSight)
-        {
-            inChase = false;
-        }
+
+        // lost the player
+        if (inChase && distance > outOfSight) inChase = false;
 
         if (!inChase)
         {
@@ -70,15 +66,10 @@ public class PursuePlayer : MonoBehaviour
             return;
         }
 
-        Vector2 targetVelocity = Vector2.zero;
-        if (targetRb != null)
-        {
-            targetVelocity = targetRb.linearVelocity;
-        }
+        Vector2 targetVelocity = targetRb != null ? targetRb.linearVelocity : Vector2.zero;
 
-        float distance = Vector2.Distance(myPos, targetPos);
-        float lookAheadTime = MathF.Min(distance/ moveSpeed, maxLookAheadTime);
 
+        float lookAheadTime = Mathf.Min(distance / moveSpeed, maxLookAheadTime);
         Vector2 predictedPos = targetPos + targetVelocity * lookAheadTime;
         Vector2 direction = (predictedPos - myPos).normalized;
 
@@ -90,8 +81,6 @@ public class PursuePlayer : MonoBehaviour
 
     void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, sightRange);
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, outOfSight);
     }
