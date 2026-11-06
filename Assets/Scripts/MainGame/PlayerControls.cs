@@ -14,7 +14,6 @@ public class PlayerControls : MonoBehaviour
     public Vector2 facing = Vector2.right;
 
     //for clamping into world bounds
-    [Header("World Bounds")]
     public Vector2 worldMin = new Vector2(-20f, -20f);//bottom left corner of play area
     public Vector2 worldMax = new Vector2(20f, 20f);//top right corner of the play area
 
@@ -61,7 +60,7 @@ public class PlayerControls : MonoBehaviour
         if (clamped != pos) rb.position = clamped;   // only move the player when actually out of bounds
     }
 
-
+    //player working mechanic is on work station file
     float sprint()
     {
         if (Input.GetKey(KeyCode.LeftShift))

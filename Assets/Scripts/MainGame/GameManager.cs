@@ -12,8 +12,8 @@ public class GameManager : MonoBehaviour
     public int docsNeeded = 1;
     public bool IsGameOver => gameOver;
 
-    //public int playerSus = 0;
-    //public int maxPlayerSus = 15;
+    [SerializeField] GameObject papersPleaseUI;   // the PapersPlease object under your UI canvas
+    public bool IsWorking { get; private set; }
 
     //public GameState State { get; private set; } = GameState.Playing;
     //public int casesCorrect, casesWrong;
@@ -21,15 +21,17 @@ public class GameManager : MonoBehaviour
 
     //public void SetState(GameState s) => State = s;
 
-
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
         Instance = this; // lets any script access the GameManager instance
         Time.timeScale = 1f;   // timeScale carries over between scene loads, so reset it
     }
 
+
+    void Start()
+    {
+        if (papersPleaseUI) papersPleaseUI.SetActive(false);   // starts hidden
+    }
 
     public void PlayerCaught()
     {
@@ -45,7 +47,19 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
+    //to activate and deactivate the UI for the papers please
+    public void SetWorking(bool working)
+    {
+        if (gameOver) working = false;   // never open the desk after winning or losing
 
+        IsWorking = working;
+
+        if (papersPleaseUI) papersPleaseUI.SetActive(working);
+
+        // let the drag scripts know. They only allow dragging while the state is Working.
+        if (DocumentManager.instance != null)
+            DocumentManager.instance.SetState(working ? EState.Working : EState.Start);   // Start is the "idle" state
+    }
 
     void Win()
     {
