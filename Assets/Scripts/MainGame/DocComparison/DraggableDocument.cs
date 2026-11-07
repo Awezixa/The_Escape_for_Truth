@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 
 //code for document comparison taken from https://github.com/hacktic-dev/ReturnToSender
 
-public class DraggableDocument : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class DraggableDocument : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     public float finalScale = 1f;
 
@@ -60,4 +60,11 @@ public class DraggableDocument : MonoBehaviour, IBeginDragHandler, IDragHandler,
     }
 
     public void OnEndDrag(PointerEventData e) { }
+    public void OnPointerDown(PointerEventData e)
+    {
+        if (!CanDrag()) return;
+        DocumentView view = GetComponent<DocumentView>();
+        if (view != null) DocumentManager.instance.Select(view);
+        transform.SetAsLastSibling();   // bring to front on click, not only on drag
+    }
 }

@@ -4,118 +4,102 @@ using UnityEngine;
 
 public class DocumentGenerator : MonoBehaviour
 {
-    //lists for infor to go on docs, need figure out what to put on
-    List<string> firstNames = new List<string>{ "words of wisdom", "yes" };
+    
+    // a document you write yourself, shown exactly as typed
+    [System.Serializable]
+    public class HandwrittenDocument
+    {
+        public string name;
+        public string address;
+        public string city;
+        public bool isValid = true;
+        public EDocumentType type = EDocumentType.Real;
+    }
 
-    List<string> surnames = new List<string>{ "THis magical state", "new text"};
+    //lists for info to go on docs, need figure out what to put on. change lists as well
+    public List<string> firstNames = new List<string> { "Anna", "Tomas", "Mira", "Jonas" };
+    public List<string> surnames = new List<string> { "Weiss", "Reyes", "Okafor", "Berg" };
+    public List<string> streetFirstWords = new List<string> { "Maple", "Harbour", "Station" };
+    public List<string> streetLastWords = new List<string> { "Street", "Road", "Lane" };
+    public List<string> cities = new List<string> { "Aldport", "Brightmoor", "Carrow" };
+    public List<string> fakeCities = new List<string> { "Zzyzx", "Nowhereton" };
 
-    List<string> streetLastWords = new List<string> {"blank", "new text" };
+    //if want to generate a hand written note 
+    public List<HandwrittenDocument> handwritten = new List<HandwrittenDocument>();
+    [Range(0f, 1f)] public float handwrittenChance = 0.3f;   // chance of picking one of yours
 
-    List<string> streetFirstWords = new List<string> { "yep", "new text" };
-
-    List<string> cities = new List<string> { "ok", "new text" };
-
-    List<string> fakeCities = new List<string> {"bad", "new text" };
+    //chance of getting a fake doc
+    [Range(0f, 1f)] public float baseFlawChance = 0.35f;     // chance a random document is flawed
+    public float flawChancePerLevel = 0.05f;
 
     int difficulty = 0;
-    public float z = 0;
+    //things can add and change to make fake docs
+    enum Flaw { FakeStamp, PrintedStamp, MissingName, MissingAddress, FakeCity }
 
-    const int baseFakeValue = 6;
-    public void SetDifficulty(int newDifficulty)
+    public void SetDifficulty(int newDifficulty) => difficulty = newDifficulty;
+
+    public void Generate(DocumentView doc)
     {
-        difficulty = newDifficulty;
-    }
-
-    //random text gen for the docs, need to update and tweak with clanker
-    public void Generate(Document documentComponent)
-    {
-        string firstName = PickRandomFromList(firstNames) + " ";
-        string surname = PickRandomFromList(surnames);
-        string houseNumber = Mathf.RoundToInt(Random.Range(1, 420)).ToString() + " ";
-        string streetFirstWord = PickRandomFromList(streetFirstWords) + " ";
-        string streetLastWord = PickRandomFromList(streetLastWords);
-        string city = PickRandomFromList(cities);
-
-        EDocumentType type = Random.Range(0f, 1f) >= .65f ? EDocumentType.Real : EDocumentType.Fake;
-
-        bool isLetterValid = true;
-
-        int value = Random.Range(1, baseFakeValue + 1 + difficulty);
-
-        //first couple letters guaranteed to be right
-        //if (DocumentManager.instance.scorePennies < 3 && DocumentManager.instance.scorePounds < 1)
-        //    value = 0;
-
-        //10 percent chance of an evil letter if the letter is incorrect, overall 1/100 letters are evil
-        int evilLetter = Mathf.RoundToInt(Random.Range(1, 10));
-
-        //generate incorrect letter
-        if (value >= baseFakeValue)
+        // 1. sometimes use one you wrote yourself
+        if (handwritten.Count > 0 && Random.value < handwrittenChance)
         {
-            isLetterValid = false;
-
-            //if (evilLetter == 1)
-            //{
-            //letter = MakeEvilLetter();
-            //return;
-            //}
-
-            switch (value)
-            {
-                case baseFakeValue:
-                    //no stamp
-                    type = EDocumentType.Fake;
-                    break;
-                case baseFakeValue + 1:
-                    type = Random.Range(0f, 1f) >= .5f ? EDocumentType.Fake : EDocumentType.Printed;
-                    //todo
-                    break;
-                case baseFakeValue + 2:
-                    //wrong name
-                    {
-                        int roll = Random.Range(0, 2);
-                        if (roll == 0)
-                            firstName = "";
-                        else
-                            surname = "";
-                        break;
-                    }
-                case baseFakeValue + 3:
-                    //wrong address
-                    {
-                        int roll = Random.Range(0, 3);
-                        if (roll == 0)
-                            houseNumber = "";
-                        else if (roll == 1)
-                            streetFirstWord = "";
-                        else
-                            streetLastWord = "";
-                        break;
-                    }
-                case baseFakeValue + 4:
-                    //fake city
-                    city = PickRandomFromList(fakeCities);
-                    break;
-            }
-
+            HandwrittenDocument h = handwritten[Random.Range(0, handwritten.Count)];
+            doc.Initialise(h.name + "\n" + h.address + "\n" + h.city, h.isValid, h.type);
+            return;
         }
 
-        string information = firstName + surname + "\n" + houseNumber + streetFirstWord + streetLastWord + "\n" + city;
-        //documentComponent.Initialise(address, isLetterValid, type, z);
-        z += .2f;
-        if (z > 8.5)
-            z = 0;
+        // 2. otherwise build a random, correct document
+        string firstName = Pick(firstNames);
+        string surname = Pick(surnames);
+        string houseNumber = Random.Range(1, 420).ToString();
+        string streetFirst = Pick(streetFirstWords);
+        string streetLast = Pick(streetLastWords);
+        string city = Pick(cities);
+        EDocumentType type = EDocumentType.Real;
+        bool valid = true;
+
+        // 3. sometimes break it. Harder flaws unlock as difficulty rises.
+        float flawChance = baseFlawChance + flawChancePerLevel * difficulty;
+        if (Random.value < flawChance)
+        {
+            valid = false;
+            int unlocked = Mathf.Min(5, 1 + difficulty);   // difficulty 0 = only FakeStamp
+            Flaw flaw = (Flaw)Random.Range(0, unlocked);
+
+            switch (flaw)
+            {
+                case Flaw.FakeStamp:
+                    type = EDocumentType.Fake;
+                    break;
+                case Flaw.PrintedStamp:
+                    type = EDocumentType.Printed;
+                    break;
+                case Flaw.MissingName:
+                    if (Random.value < 0.5f) firstName = ""; else surname = "";
+                    break;
+                case Flaw.MissingAddress:
+                    int roll = Random.Range(0, 3);
+                    if (roll == 0) houseNumber = "";
+                    else if (roll == 1) streetFirst = "";
+                    else streetLast = "";
+                    break;
+                case Flaw.FakeCity:
+                    city = Pick(fakeCities);
+                    break;
+            }
+        }
+
+        // 4. assemble the text, tidying any gaps left by removed parts
+        string fullName = (firstName + " " + surname).Trim();
+        string street = (houseNumber + " " + streetFirst + " " + streetLast).Replace("  ", " ").Trim();
+
+        doc.Initialise(fullName + "\n" + street + "\n" + city, valid, type);
+        Debug.Log("Generated: " + fullName + " | " + street + " | " + city + " | valid = " + valid);
     }
 
-    //Letter MakeEvilLetter()
-    //{
-    //	return new Letter();
-    //}
-
-    string PickRandomFromList(List<string> list)
+    string Pick(List<string> list)
     {
-        int index = Mathf.RoundToInt(Random.Range(0, list.Count));
-
-        return list[index];
+        if (list == null || list.Count == 0) return "";
+        return list[Random.Range(0, list.Count)];
     }
 }

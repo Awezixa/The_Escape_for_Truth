@@ -2500,6 +2500,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a036329b89a5604418b32440f8342c6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DocumentManager
+  documents:
+  - {fileID: 1197142191}
+  generator: {fileID: 846205125}
 --- !u!1 &531213158
 GameObject:
   m_ObjectHideFlags: 0
@@ -4063,6 +4066,79 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 844045209}
   m_CullTransparentMesh: 1
+--- !u!1 &846205124
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 846205126}
+  - component: {fileID: 846205125}
+  m_Layer: 0
+  m_Name: DocumentGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &846205125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 846205124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31b8b207373f3d94c8d1f73fcd54abb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DocumentGenerator
+  firstNames:
+  - Anna
+  - Tomas
+  - Mira
+  - Jonas
+  surnames:
+  - Weiss
+  - Reyes
+  - Okafor
+  - Berg
+  streetFirstWords:
+  - Maple
+  - Harbour
+  - Station
+  streetLastWords:
+  - Street
+  - Road
+  - Lane
+  cities:
+  - Aldport
+  - Brightmoor
+  - Carrow
+  fakeCities:
+  - Zzyzx
+  - Nowhereton
+  handwritten: []
+  handwrittenChance: 0.3
+  baseFlawChance: 0.35
+  flawChancePerLevel: 0.05
+--- !u!4 &846205126
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 846205124}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.77911, y: 3.82254, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &847626277
 GameObject:
   m_ObjectHideFlags: 0
@@ -5324,7 +5400,7 @@ GameObject:
   - component: {fileID: 1157440162}
   - component: {fileID: 1157440161}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: DiscardButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5519,6 +5595,7 @@ GameObject:
   - component: {fileID: 1197142189}
   - component: {fileID: 1197142188}
   - component: {fileID: 1197142190}
+  - component: {fileID: 1197142191}
   m_Layer: 5
   m_Name: Document
   m_TagString: Untagged
@@ -5601,6 +5678,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DraggableDocument
   finalScale: 1
+--- !u!114 &1197142191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1197142186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06af82236fdcc3148baee319c0df73a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DocumentView
+  text: {fileID: 1132593154}
+  documentSprite: {fileID: 0}
 --- !u!1 &1197424462
 GameObject:
   m_ObjectHideFlags: 0
@@ -6559,7 +6650,7 @@ GameObject:
   - component: {fileID: 1357283899}
   - component: {fileID: 1357283898}
   m_Layer: 5
-  m_Name: Button
+  m_Name: AcceptButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6628,19 +6719,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1357283899}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2106112915}
-        m_TargetAssemblyTypeName: TMPro.TextMeshProUGUI, Unity.TextMeshPro
-        m_MethodName: set_text
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: "Redacted \u25A0\u25A0\u25A0\u25A0\u25A0\u25A0\u25A0"
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1357283899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8554,7 +8633,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: Discard
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -9773,7 +9852,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: Accept
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -10189,3 +10268,4 @@ SceneRoots:
   - {fileID: 1447650325}
   - {fileID: 143103031}
   - {fileID: 530811646}
+  - {fileID: 846205126}

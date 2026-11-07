@@ -1,5 +1,6 @@
-using System.Net;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public enum EDocumentType
@@ -12,31 +13,36 @@ public enum EDocumentType
 
 
 
-
-
 public class DocumentView : MonoBehaviour
 {
-    string information;
+    public TMP_Text text;  // main text on documents
+    public string information { get; private set; }
     public bool isValid { get; private set; }
     public EDocumentType documentType { get; private set; }
     public SpriteRenderer documentSprite;
-    public TextMesh text;
 
-    public void Initialise(string _information, bool _isInfoValid, EDocumentType _type, float z)
+
+    Vector2 startPosition;
+    bool startSaved;
+
+
+    public void Initialise(string _information, bool _isInfoValid, EDocumentType _type)
     {
-        float rotation = (Random.Range(0f, 1f) > .5f ? 1 : -1) * Random.Range(0f, 20f);
-        float stampRotation = (Random.Range(0f, 1f) > .5f ? 1 : -1) * Random.Range(0f, 8f) + rotation;
+        RectTransform rt = (RectTransform)transform;
 
-        transform.rotation = Quaternion.Euler(0, 0, rotation);
-        transform.position = new Vector3(Random.Range(-4.5f, 4.5f), Random.Range(-2.5f, 2.5f), -z - .5f);
-        text.transform.position = new Vector3(text.transform.position.x, text.transform.position.y, -z - .5f);
+        // remember where it was laid out in the editor, so repeated calls don't drift away
+        if (!startSaved)
+        {
+            startPosition = rt.anchoredPosition;
+            startSaved = true;
+        }
 
         information = _information;
         isValid = _isInfoValid;
         documentType = _type;
 
 
-        text.text = information;
+        if (text) text.text = information;
 
         //choose doc texture
         //need review when have more sprites and see if we want do this
