@@ -7,6 +7,7 @@ TagManager:
   - Throwable
   - Movable
   - Walls
+  - Desk
   layers:
   - Default
   - TransparentFX
@@ -20,8 +21,8 @@ TagManager:
   - Collectables
   - Moveable
   - Obstruction
-  - 
-  - 
+  - Desk
+  - Floor
   - 
   - 
   - 
@@ -41,8 +42,14 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Floor
+    uniqueID: 1470794017
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Desk
+    uniqueID: 2964504369
     locked: 0
   m_RenderingLayers:
   - Default
