@@ -50,7 +50,25 @@ public class DocumentManager : MonoBehaviour
         doc.gameObject.SetActive(false);
         generator.Generate(doc);
         doc.gameObject.SetActive(true);   // the pop-in animation plays again
+        GameManager.Instance.docsCollected--;
     }
 
+    public void KeepCurrent()
+    {
+        if (state != EState.Working || current == null) return;
 
+        // placeholder rule: forgetting a valid document is a mistake, forgetting a bad one is correct
+        //bool correct = !current.isValid;
+        //Debug.Log("Forgot a document. Valid = " + current.isValid + ", correct choice = " + correct);
+
+        //if (!correct && meter != null) meter.AddSuspicion(wrongChoicePenalty);
+
+        // reuse the paper: hide it, give it new text, show it again
+        DocumentView doc = current;
+        current = null;
+        doc.gameObject.SetActive(false);
+        generator.Generate(doc);
+        doc.gameObject.SetActive(true);   // the pop-in animation plays again
+        GameManager.Instance.docsKept++;
+    }
 }

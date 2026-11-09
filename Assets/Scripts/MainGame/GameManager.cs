@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     bool gameOver;
     public int docsCollected;
     public int docsNeeded = 1;
+    public int docsKept;
     public bool IsGameOver => gameOver;
 
     [SerializeField] GameObject papersPleaseUI;   // the PapersPlease object under your UI canvas
