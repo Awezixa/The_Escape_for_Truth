@@ -9,8 +9,11 @@ public class GameManager : MonoBehaviour
 
     bool gameOver;
     public int docsCollected;
-    public int docsNeeded = 1;
     public int docsKept;
+    public int docsToReview;
+
+    public int docsNeeded = 1;
+    
     public bool IsGameOver => gameOver;
 
     [SerializeField] GameObject papersPleaseUI;   // the PapersPlease object under your UI canvas
@@ -60,6 +63,9 @@ public class GameManager : MonoBehaviour
         // let the drag scripts know. They only allow dragging while the state is Working.
         if (DocumentManager.instance != null)
             DocumentManager.instance.SetState(working ? EState.Working : EState.Start);   // Start is the "idle" state
+
+        if (working && DocumentManager.instance != null)
+            DocumentManager.instance.OpenDesk();
     }
 
     void Win()
@@ -74,4 +80,29 @@ public class GameManager : MonoBehaviour
     //    // later: playerSus += 5;
     //    if (casesWrong >= maxMistakes) { State = GameState.GameOver; Debug.Log("Fired!"); }
     //}
+
+    public void DocumentPickUp()
+    {
+        docsCollected++;
+        docsToReview++;
+    }
+
+
+    public bool KeepDocument()
+    {
+        if (docsToReview <= 0) { return false; }
+        docsToReview--;
+        docsKept++;
+        return true;
+    }
+
+    public bool DiscardDocument()
+    {
+        if (docsToReview <= 0) { return false; }
+        docsToReview--;
+        return true;
+    }
+
+
+
 }

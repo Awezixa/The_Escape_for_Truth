@@ -1,32 +1,17 @@
-using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
+using UnityEngine;
 
 public class DisplayText : MonoBehaviour
 {
-    public TMP_Text documentCount;
-    public TMP_Text keptCount;
+    public TMP_Text documentCount;   // normal HUD: documents kept so far
+    public TMP_Text reviewCount;     // inside the desk: documents waiting for review
 
-    // Update is called once per frame
     void Update()
     {
-        docsCollected();
-        docsKept();
-        
+        GameManager gm = GameManager.Instance;
+        if (gm == null) return;
+
+        if (documentCount) documentCount.text = "Documents: " + gm.docsKept + " / " + gm.docsNeeded;
+        if (reviewCount) reviewCount.text = "To review: " + gm.docsToReview;
     }
-
-
-    void docsCollected()
-    {
-        documentCount.text = "Documents: " + GameManager.Instance.docsCollected;
-    }
-
-    void docsKept()
-    {
-        keptCount.text = "Kept: " + GameManager.Instance.docsKept;
-        //GameManager.Instance.docsCollected = GameManager.Instance.docsKept;
-    }
-
-
-
 }

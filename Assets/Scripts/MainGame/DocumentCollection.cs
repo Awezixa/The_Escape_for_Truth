@@ -35,7 +35,7 @@ public class DocumentCollection : MonoBehaviour
 
     void collectDocument()
     {
-        if (CountsTowardsGoal) GameManager.Instance.docsCollected++;
+        if (CountsTowardsGoal) GameManager.Instance.DocumentPickUp();
 
         ApplySeenPenalty();   // shared rule, using this document's own number
         OnCollected(); // function that does differnt things based on type of document collected

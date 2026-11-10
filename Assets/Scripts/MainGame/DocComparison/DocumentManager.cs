@@ -1,74 +1,103 @@
-
 using UnityEngine;
 
 public enum EState { Start, Working, End }
 
 public class DocumentManager : MonoBehaviour
 {
-    [SerializeField] DocumentView[] documents;
+    [SerializeField] DocumentView[] documents;   // the papers that can be on the desk at once
     [SerializeField] DocumentGenerator generator;
     public static DocumentManager instance = null;
 
     public EState state { get; private set; } = EState.Start;
     public DocumentView current { get; private set; }
 
-
+    bool[] dealt;   // dealt[i] = paper i currently holds a document. Array for the amount of the documents to be delt
 
     void Awake()
     {
         if (instance == null) instance = this;
-        else Destroy(this);
-    }
-    void Start()
-    {
-        NewShift();
+        else { Destroy(this); return; }
+
+        dealt = new bool[documents.Length];//instanciates the amount of documents in the array to see how many need to be reviewed
+        foreach (DocumentView d in documents) d.gameObject.SetActive(false);   // desk starts empty
     }
 
-    public void NewShift()
-    {
-        foreach (DocumentView d in documents) generator.Generate(d);
-    }
     public void SetState(EState s) => state = s;
-
-    // called by a document when the player clicks or drags it
     public void Select(DocumentView doc) => current = doc;
 
-    // hooked up to the Forget button
-    public void ForgetCurrent()
+    //function to open when player goes to work
+    public void OpenDesk()
     {
-        if (state != EState.Working || current == null) return;
+        int needed = Mathf.Min(documents.Length, GameManager.Instance.docsToReview);// checks the minimum amount of documents needed to be instanciated
 
-        // placeholder rule: forgetting a valid document is a mistake, forgetting a bad one is correct
-        //bool correct = !current.isValid;
-        //Debug.Log("Forgot a document. Valid = " + current.isValid + ", correct choice = " + correct);
+        // papers already on the desk keep their documents
+        for (int i = 0; i < documents.Length && CountOnDesk() < needed; i++)
+        {
+            if (!dealt[i]) Deal(i);// instanciates the need amount of docs based on the number of docs collected
+        }
 
-        //if (!correct && meter != null) meter.AddSuspicion(wrongChoicePenalty);
-
-        // reuse the paper: hide it, give it new text, show it again
-        DocumentView doc = current;
-        current = null;
-        doc.gameObject.SetActive(false);
-        generator.Generate(doc);
-        doc.gameObject.SetActive(true);   // the pop-in animation plays again
-        GameManager.Instance.docsCollected--;
+        if (current == null) SelectDefault();
     }
 
     public void KeepCurrent()
     {
-        if (state != EState.Working || current == null) return;
+        if (!CanDecide()) return;
+        if (!GameManager.Instance.KeepDocument()) return;
+        Resolve();
+    }
 
-        // placeholder rule: forgetting a valid document is a mistake, forgetting a bad one is correct
-        //bool correct = !current.isValid;
-        //Debug.Log("Forgot a document. Valid = " + current.isValid + ", correct choice = " + correct);
+    public void ForgetCurrent()
+    {
+        if (!CanDecide()) return;
+        if (!GameManager.Instance.DiscardDocument()) return;
+        Resolve();
+    }
 
-        //if (!correct && meter != null) meter.AddSuspicion(wrongChoicePenalty);
+    bool CanDecide()
+    {
+        return state == EState.Working && current != null
+               && System.Array.IndexOf(documents, current) >= 0;
+    }
 
-        // reuse the paper: hide it, give it new text, show it again
-        DocumentView doc = current;
+    // removes the decided paper, and puts a new document on it only if more are still waiting
+    void Resolve()
+    {
+        int idx = System.Array.IndexOf(documents, current);
         current = null;
-        doc.gameObject.SetActive(false);
-        generator.Generate(doc);
-        doc.gameObject.SetActive(true);   // the pop-in animation plays again
-        GameManager.Instance.docsKept++;
+
+        dealt[idx] = false;
+        documents[idx].gameObject.SetActive(false);
+
+        // documents already on the desk (the decided paper no longer counts)
+        //loop to continuiosly add docs based on if there are more documents for the player to review
+        if (CountOnDesk() < GameManager.Instance.docsToReview)
+            Deal(idx);
+
+        SelectDefault();
+    }
+
+    void Deal(int i)
+    {
+        //generation of documents
+        generator.Generate(documents[i]);
+        dealt[i] = true;
+        documents[i].gameObject.SetActive(true);   // pop-in animation plays
+    }
+
+    int CountOnDesk()
+    {
+        int n = 0;
+        for (int i = 0; i < dealt.Length; i++) if (dealt[i]) n++;
+        return n;
+    }
+
+    // so Keep and Discard work without clicking when only one paper is showing
+    void SelectDefault()
+    {
+        for (int i = 0; i < dealt.Length; i++)
+        {
+            if (dealt[i]) { current = documents[i]; return; }
+        }
+        current = null;
     }
 }

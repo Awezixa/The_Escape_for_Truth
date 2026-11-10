@@ -16,10 +16,10 @@ public class LevelExit : MonoBehaviour
             
             //pass in build index for level want to change to
         }
-        else
+        if (gm.docsKept < gm.docsNeeded)
         {
-            Debug.Log("You need to collect the document first! (" + gm.docsCollected + "/" + gm.docsNeeded + ")");
-
+            Debug.Log("You need to keep the document first! (" + gm.docsKept + "/" + gm.docsNeeded + ")");
+            return;
         }
     }
 
