@@ -22,10 +22,21 @@ public class PlayerControls : MonoBehaviour
     public float padding = 0.5f;
     Vector2 moveDir;
 
+
+    [SerializeField] Transform spriteTransform;   // the child object that holds the SpriteRenderer
+    public float spriteAngleOffset = 0f;
+    public float turnSmoothTime = 0.08f;          // lower = snappier, higher = floatier
+    float currentAngle;
+    float angleVelocity;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+
+        // start facing the right way instead of snapping on the first move
+        currentAngle = Vector2.SignedAngle(Vector2.right, facing) + spriteAngleOffset;
+        if (spriteTransform) spriteTransform.rotation = Quaternion.Euler(0f, 0f, currentAngle);
     }
 
     // Update is called once per frame
@@ -40,6 +51,7 @@ public class PlayerControls : MonoBehaviour
         }
 
         moveDir = new Vector2(inputX, inputY);
+        RotateSprite();
     }
 
     private void FixedUpdate()
@@ -79,6 +91,13 @@ public class PlayerControls : MonoBehaviour
         Vector2 size = worldMax - worldMin;
         Gizmos.DrawWireCube(center, size);
     }
+    void RotateSprite()
+    {
+        if (!spriteTransform) return;
 
+        float target = Vector2.SignedAngle(Vector2.right, facing) + spriteAngleOffset;
+        currentAngle = Mathf.SmoothDampAngle(currentAngle, target, ref angleVelocity, turnSmoothTime);
+        spriteTransform.rotation = Quaternion.Euler(0f, 0f, currentAngle);
+    }
 
 }
