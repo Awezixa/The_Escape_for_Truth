@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: e57ac8fd6edce4c428ca889f5a8fbc8b
+guid: a9ffee75f7d10da4b8345eb802e4a3e9
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 907484561836564031
-    second: Bar3_0
+      213: -8811806715494619191
+    second: ExitButton_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -109,17 +109,30 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Bar3_0
+      name: ExitButton_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 211
-        height: 83
+        width: 114
+        height: 110
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f3e5b63a668089c00800000000000000
-      internalID: 907484561836564031
+      spriteID: 9c7aa8daa7c26b580800000000000000
+      internalID: -8811806715494619191
       vertices: []
       indices: 
       edges: []
@@ -148,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Bar3_0: 907484561836564031
+      ExitButton_0: -8811806715494619191
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

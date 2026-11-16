@@ -1,22 +1,10 @@
 fileFormatVersion: 2
-guid: 29355cf67464e48ef983f19c02b86b5d
+guid: 1d752ff9f4cca4f518c68776ed0ce914
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5799278283812673077
-    second: Suspicion Bar_0
-  - first:
-      213: -3303534806180680690
-    second: Suspicion Bar_1
-  - first:
-      213: 8726088459100843339
-    second: Suspicion Bar_2
-  - first:
-      213: -994668991273711527
-    second: Suspicion Bar_3
-  - first:
-      213: -3148798667086789618
-    second: Suspicion Bar_4
+      213: -8757816339171775503
+    second: Bar1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -58,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -121,105 +109,30 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Suspicion Bar_0
+      name: Bar1_0
       rect:
         serializedVersion: 2
-        x: 3
-        y: 156
-        width: 53
-        height: 60
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 5369a4c8fdc2b7050800000000000000
-      internalID: 5799278283812673077
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Suspicion Bar_1
-      rect:
-        serializedVersion: 2
-        x: 13
-        y: 2
-        width: 1250
-        height: 207
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: e0c267eb89c7722d0800000000000000
-      internalID: -3303534806180680690
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Suspicion Bar_2
-      rect:
-        serializedVersion: 2
-        x: 378
-        y: 159
-        width: 41
-        height: 52
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: b4d6753883b491970800000000000000
-      internalID: 8726088459100843339
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Suspicion Bar_3
-      rect:
-        serializedVersion: 2
-        x: 1233
-        y: 112
-        width: 48
-        height: 50
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 958c80a82d93232f0800000000000000
-      internalID: -994668991273711527
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Suspicion Bar_4
-      rect:
-        serializedVersion: 2
-        x: 1213
+        x: 0
         y: 0
-        width: 58
-        height: 56
+        width: 211
+        height: 83
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -228,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e04811b9b483d44d0800000000000000
-      internalID: -3148798667086789618
+      spriteID: 1fbed8fb07cf57680800000000000000
+      internalID: -8757816339171775503
       vertices: []
       indices: 
       edges: []
@@ -238,7 +151,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -248,11 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Suspicion Bar_0: 5799278283812673077
-      Suspicion Bar_1: -3303534806180680690
-      Suspicion Bar_2: 8726088459100843339
-      Suspicion Bar_3: -994668991273711527
-      Suspicion Bar_4: -3148798667086789618
+      Bar1_0: -8757816339171775503
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 4438a084c4c4f438090d6623920c36b3
+guid: 210de75dec17340edb539f1c04837f12
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3164228845943814332
-    second: Bar4_0
+      213: 6605020072722845236
+    second: Bar5_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -109,11 +109,24 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Bar4_0
+      name: Bar5_0
       rect:
         serializedVersion: 2
         x: 0
@@ -128,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 447897121a66614d0800000000000000
-      internalID: -3164228845943814332
+      spriteID: 43e48f0e2ceb9ab50800000000000000
+      internalID: 6605020072722845236
       vertices: []
       indices: 
       edges: []
@@ -148,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Bar4_0: -3164228845943814332
+      Bar5_0: 6605020072722845236
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
