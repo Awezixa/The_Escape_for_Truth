@@ -2,6 +2,11 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public enum GameState { Playing, Working, GameOver, Won, Pause }
 //script going to be dealing with rules and controlling game state
+
+
+//enums for room types and restrictions
+public enum roomRestrictions {None = 0, Work = 1, Sprint = 2, Collect = 4 }
+
 public class GameManager : MonoBehaviour
 {
 
@@ -18,6 +23,18 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] GameObject papersPleaseUI;   // the PapersPlease object under your UI canvas
     public bool IsWorking { get; private set; }
+
+
+
+
+    // counters, not bools, so overlapping rooms can't unblock each other by mistake
+    int workBlocks, sprintBlocks, collectBlocks;
+
+    public bool CanWork => workBlocks == 0;      // covers both using the desk and reviewing documents
+    public bool CanSprint => sprintBlocks == 0;
+    public bool CanCollect => collectBlocks == 0;
+
+
 
     //public GameState State { get; private set; } = GameState.Playing;
     //public int casesCorrect, casesWrong;
@@ -54,7 +71,7 @@ public class GameManager : MonoBehaviour
     //to activate and deactivate the UI for the papers please
     public void SetWorking(bool working)
     {
-        if (gameOver) working = false;   // never open the desk after winning or losing
+        if (gameOver || !CanWork) working = false;   // never open doc comparison if blocked or game/ level complete
 
         IsWorking = working;
 
@@ -104,5 +121,22 @@ public class GameManager : MonoBehaviour
     }
 
 
+    //fucntion to add restriction blocks too a room subclass
+    public void AddRestrictions(roomRestrictions r)
+    {
+        if (r.HasFlag(roomRestrictions.Work)) workBlocks++;
+        if (r.HasFlag(roomRestrictions.Sprint)) sprintBlocks++;
+        if (r.HasFlag(roomRestrictions.Collect)) collectBlocks++;
+
+        if (!CanWork && IsWorking) SetWorking(false);   // close the desk if it was open
+    }
+
+    //helper function to remove restrictions from room
+    public void RemoveRestrictions(roomRestrictions r)
+    {
+        if (r.HasFlag(roomRestrictions.Work)) workBlocks = Mathf.Max(0, workBlocks - 1);
+        if (r.HasFlag(roomRestrictions.Sprint)) sprintBlocks = Mathf.Max(0, sprintBlocks - 1);
+        if (r.HasFlag(roomRestrictions.Collect)) collectBlocks = Mathf.Max(0, collectBlocks - 1);
+    }
 
 }

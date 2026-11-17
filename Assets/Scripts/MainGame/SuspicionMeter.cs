@@ -95,4 +95,17 @@ public class SuspicionMeter : MonoBehaviour
             segments[i].color = c;
         }
     }
+
+
+    public void ResetSuspicion()
+    {
+        if (caught) return;
+
+        suspicion = 0f;
+        //drainTimer = 0f;
+        UpdateSegments();
+    }
+
+
+
 }

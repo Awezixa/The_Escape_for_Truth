@@ -20,7 +20,13 @@ public class WorkStation : MonoBehaviour
 
 
         // you can only be working if the player is standing still, holding f (going to change to toggling f) and the game isnt paused or over
-        bool working = Time.timeScale != 0f && playerNearby && Input.GetKey(KeyCode.F) && Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0;
+        //can put other restrictions if needed
+        bool working = Time.timeScale != 0f
+               && GameManager.Instance.CanWork
+               && playerNearby
+               && Input.GetKey(KeyCode.F)
+               && Input.GetAxisRaw("Horizontal") == 0
+               && Input.GetAxisRaw("Vertical") == 0;
 
         isWorking = working;
 

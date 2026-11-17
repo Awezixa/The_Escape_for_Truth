@@ -75,10 +75,9 @@ public class PlayerControls : MonoBehaviour
     //player working mechanic is on work station file
     float sprint()
     {
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (GameManager.Instance.CanSprint && Input.GetKey(KeyCode.LeftShift))
         {
             return Speed * sprintSpeed;
-            
         }
         return Speed;
     }

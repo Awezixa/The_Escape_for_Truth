@@ -13,7 +13,8 @@ public class DocumentCollection : MonoBehaviour
     {
         if (playerNearby && Input.GetKeyDown(KeyCode.E))
         {
-            collectDocument();
+            if (GameManager.Instance.CanCollect) collectDocument();
+            else Debug.Log("Can't collect documents while on break.");
         }
     }
 
