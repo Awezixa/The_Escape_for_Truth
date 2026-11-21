@@ -12,6 +12,7 @@ public class LevelExit : MonoBehaviour
         if(gm.docsCollected >= gm.docsNeeded)
         {
             Debug.Log("Level Passed");
+            unlockNewLevel();
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);// basically checks secen then increases to next when player reaches the scene
             
             //pass in build index for level want to change to
@@ -23,7 +24,17 @@ public class LevelExit : MonoBehaviour
         }
     }
 
+    void unlockNewLevel()
+    {
+        if(SceneManager.GetActiveScene().buildIndex >= PlayerPrefs.GetInt("ReachedIndex"))
+        {
+            PlayerPrefs.SetInt("ReachedInex", SceneManager.GetActiveScene().buildIndex +1);
+            PlayerPrefs.SetInt("UnlockedLevel", PlayerPrefs.GetInt("UnlockedLevel", 1)+1);
+            PlayerPrefs.Save();
 
+
+        }
+    }
 
 
 }
