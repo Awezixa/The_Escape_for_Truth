@@ -3295,7 +3295,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 7
   m_Depth: 1
   m_CullingMask:
     serializedVersion: 2
@@ -7356,6 +7356,7 @@ Transform:
   - {fileID: 1542887124}
   - {fileID: 434700831}
   - {fileID: 1585431083}
+  - {fileID: 1214210623}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1132593152
@@ -8319,6 +8320,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DocumentView
   text: {fileID: 1132593154}
   documentSprite: {fileID: 0}
+--- !u!4 &1214210623 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5843278497556506128, guid: bf7be4ecaa6d4084ab3e0e33efe6e5d1, type: 3}
+  m_PrefabInstance: {fileID: 1791110360126617177}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1228140026
 GameObject:
   m_ObjectHideFlags: 0
@@ -15133,7 +15139,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1118608300}
     m_Modifications:
     - target: {fileID: 5843278497556506128, guid: bf7be4ecaa6d4084ab3e0e33efe6e5d1, type: 3}
       propertyPath: m_LocalPosition.x
@@ -15153,15 +15159,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5843278497556506128, guid: bf7be4ecaa6d4084ab3e0e33efe6e5d1, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 5843278497556506128, guid: bf7be4ecaa6d4084ab3e0e33efe6e5d1, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 5843278497556506128, guid: bf7be4ecaa6d4084ab3e0e33efe6e5d1, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 5843278497556506128, guid: bf7be4ecaa6d4084ab3e0e33efe6e5d1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -15204,7 +15210,6 @@ SceneRoots:
   - {fileID: 143103031}
   - {fileID: 530811646}
   - {fileID: 846205126}
-  - {fileID: 1791110360126617177}
   - {fileID: 19412297}
   - {fileID: 1245799508}
   - {fileID: 831752877}
