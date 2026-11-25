@@ -49,6 +49,9 @@ void Update()
         }
 
 
+        // no grabbing or throwing while typing a door code
+        if (GameManager.Instance != null && GameManager.Instance.IsUsingKeypad) return;
+
         Vector2 origin = (Vector2)transform.position + dir * 0.6f;
         RaycastHit2D hitInfo = Physics2D.CircleCast(origin, 0.4f, dir, rayDistance, grabMask);
         Debug.DrawRay(origin, dir * rayDistance, hitInfo.collider != null ? Color.green : Color.red);

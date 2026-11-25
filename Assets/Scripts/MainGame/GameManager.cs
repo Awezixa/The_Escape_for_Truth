@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] GameObject papersPleaseUI;   // the PapersPlease object under your UI canvas
     public bool IsWorking { get; private set; }
+    public bool IsUsingKeypad { get; private set; }   // true while a door keypad is open (player stands still)
 
 
 
@@ -83,6 +84,13 @@ public class GameManager : MonoBehaviour
 
         if (working && DocumentManager.instance != null)
             DocumentManager.instance.OpenDesk();
+    }
+
+    // called by DoorKeypadUI when the keypad opens or closes
+    public void SetUsingKeypad(bool open)
+    {
+        if (gameOver) open = false;
+        IsUsingKeypad = open;
     }
 
     void Win()

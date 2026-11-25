@@ -23,6 +23,7 @@ public class WorkStation : MonoBehaviour
         //can put other restrictions if needed
         bool working = Time.timeScale != 0f
                && GameManager.Instance.CanWork
+               && !GameManager.Instance.IsUsingKeypad
                && playerNearby
                && Input.GetKey(KeyCode.F)
                && Input.GetAxisRaw("Horizontal") == 0

@@ -42,6 +42,17 @@ public class PlayerControls : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // stand still while typing a door code (and after game over)
+        GameManager gm = GameManager.Instance;
+        if (gm != null && (gm.IsUsingKeypad || gm.IsGameOver))
+        {
+            inputX = 0;
+            inputY = 0;
+            moveDir = Vector2.zero;
+            if (rb) rb.linearVelocity = Vector2.zero;
+            return;
+        }
+
         inputX = Input.GetAxisRaw("Horizontal");
         inputY = Input.GetAxisRaw("Vertical");
 

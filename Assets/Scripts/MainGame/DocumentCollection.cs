@@ -11,6 +11,9 @@ public class DocumentCollection : MonoBehaviour
 
     void Update()
     {
+        GameManager gm = GameManager.Instance;
+        if (gm != null && gm.IsUsingKeypad) return;   // no collecting while typing a door code
+
         if (playerNearby && Input.GetKeyDown(KeyCode.E))
         {
             if (GameManager.Instance.CanCollect) collectDocument();

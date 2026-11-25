@@ -16,7 +16,7 @@ public class DoorCodePickup : MonoBehaviour
         if (!playerNearby || !Input.GetKeyDown(KeyCode.E) || Time.timeScale == 0f) return;
 
         GameManager gm = GameManager.Instance;
-        if (gm != null && (!gm.CanCollect || gm.IsWorking || gm.IsGameOver)) return;
+        if (gm != null && (!gm.CanCollect || gm.IsWorking || gm.IsGameOver || gm.IsUsingKeypad)) return;
 
         if (door == null)
         {
@@ -40,6 +40,9 @@ public class DoorCodePickup : MonoBehaviour
 
     void OnGUI()
     {
+        GameManager gm = GameManager.Instance;
+        if (gm != null && gm.IsUsingKeypad) return;
+
         if (playerNearby && Time.timeScale != 0f)
             GUI.Box(new Rect((Screen.width - 300) / 2f, Screen.height - 90, 300, 28), "Press E to pick up the code note");
     }
