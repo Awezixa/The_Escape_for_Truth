@@ -1,6 +1,5 @@
 using UnityEngine;
 
-[RequireComponent(typeof(BoxCollider2D))]
 public class CodeLockedDoor : MonoBehaviour
 {
     [SerializeField] string code = "0427";

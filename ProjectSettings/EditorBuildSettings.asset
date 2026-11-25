@@ -8,15 +8,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: f45e52e944673c142857065a8d919c4f
-  - enabled: 0
-    path: Assets/Scenes/LevelSelect.unity
-    guid: 198ea0227472dfa4f899497b738ee904
   - enabled: 1
     path: Assets/Scenes/TheFirstStep.unity
     guid: 7cb5278be9d0bbe4d92150a728029169
   - enabled: 1
     path: Assets/Scenes/ThingsAreChanging.unity
     guid: 5d402804ae9ec44ffbf398b564463560
+  - enabled: 1
+    path: Assets/Scenes/TheTruthEscalates.unity
+    guid: bee75ee70b7fd66448c940cf04ae83b9
   - enabled: 0
     path: Assets/Scenes/Demo scene.unity
     guid: 74d7ff6780fa55646b289b3372de1495
